@@ -2,7 +2,7 @@ use std::{io, time::SystemTime};
 
 use log::{debug, info, trace, warn};
 
-fn setup_logging(verbosity: u64) -> Result<(), fern::InitError> {
+fn setup_logging(verbosity: u8) -> Result<(), fern::InitError> {
     let mut base_config = fern::Dispatch::new();
 
     base_config = match verbosity {
@@ -64,17 +64,17 @@ fn setup_logging(verbosity: u64) -> Result<(), fern::InitError> {
 }
 
 fn main() {
-    let cmd_arguments = clap::App::new("cmd-program")
+    let cmd_arguments = clap::Command::new("cmd-program")
         .arg(
-            clap::Arg::with_name("verbose")
-                .short("v")
+            clap::Arg::new("verbose")
+                .short('v')
                 .long("verbose")
-                .multiple(true)
-                .help("Increases logging verbosity each use for up to 3 times"),
+                .help("Increases logging verbosity each use for up to 3 times")
+                .action(clap::ArgAction::Count),
         )
         .get_matches();
 
-    let verbosity: u64 = cmd_arguments.occurrences_of("verbose");
+    let verbosity = cmd_arguments.get_count("verbose");
 
     setup_logging(verbosity).expect("failed to initialize logging.");
 

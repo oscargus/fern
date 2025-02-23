@@ -20,7 +20,7 @@ include = ["Cargo.toml", "src/**/*", "tests/**/*", "examples/**/*", "LICENSE", "
 
 [dependencies]
 log = { version = "0.4", features = ["std"] }
-colored = { version = "2.1.0", optional = true }
+colored = { version = "3.0", optional = true }
 chrono = { version = "0.4", default-features = false, features = ["std", "clock"], optional = true }
 
 [target."cfg(not(windows))".dependencies]
@@ -44,7 +44,7 @@ date-based = ["chrono"]
 
 [dev-dependencies]
 tempfile = "3"
-clap = "2.22"
+clap = "4"
 humantime = "2.1.0"
 
 [[example]]
