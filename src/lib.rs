@@ -251,8 +251,14 @@ mod builders;
 mod errors;
 mod log_impl;
 
-#[cfg(feature = "colored")]
+#[cfg(any(feature = "colored", feature = "colored-3"))]
 pub mod colors;
+#[cfg(feature = "colored")]
+use colored2 as colored;
+
+#[cfg(feature = "colored-3")]
+use colored3 as colored;
+
 #[cfg(all(
     feature = "syslog-3",
     feature = "syslog-4",

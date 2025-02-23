@@ -1,5 +1,5 @@
 #[cfg(not(windows))]
-// This is necessary because `fern` depends on both version 3, 4 and 6
+// This is necessary because `fern` depends on multiple versions.
 use syslog7 as syslog;
 
 #[cfg(not(windows))]

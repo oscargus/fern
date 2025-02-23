@@ -1,7 +1,7 @@
 //! Support for ANSI terminal colors via the colored crate.
 //!
-//! To enable support for colors, add the `"colored"` feature in your
-//! `Cargo.toml`:
+//! To enable support for colors, add the `"colored"` or `"colored-3"`
+//! (version 3, which requires rust 1.80) feature in your `Cargo.toml`:
 //!
 //! ```toml
 //! [dependencies]
@@ -56,7 +56,7 @@
 //! [ex]: https://github.com/daboross/fern/blob/fern-0.7.0/examples/pretty-colored.rs
 use std::fmt;
 
-pub use colored::Color;
+pub use crate::colored::Color;
 use log::Level;
 
 /// Extension crate allowing the use of `.colored` on Levels.
@@ -158,7 +158,7 @@ impl ColoredLevelConfig {
     pub fn new() -> Self {
         #[cfg(windows)]
         {
-            let _ = colored::control::set_virtual_terminal(true);
+            let _ = crate::colored::control::set_virtual_terminal(true);
         }
         Self::default()
     }
@@ -280,7 +280,7 @@ impl ColoredLogLevel for Level {
 #[cfg(test)]
 #[cfg(not(windows))]
 mod test {
-    use colored::{Color::*, Colorize};
+    use crate::colored::{Color::*, Colorize};
 
     use super::WithFgColor;
 
@@ -304,7 +304,7 @@ mod test {
             BrightCyan,
             BrightWhite,
         ] {
-            colored::control::SHOULD_COLORIZE.set_override(true);
+            crate::colored::control::SHOULD_COLORIZE.set_override(true);
             assert_eq!(
                 format!("{}", "test".color(color)),
                 format!(
